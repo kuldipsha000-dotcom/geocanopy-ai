@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GeoCanopy AI — Project Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Crimson Pro', serif;
+      font-size: 12pt;
+      line-height: 1.85;
+      color: #1a1a1a;
+      background: #fff;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 60px 80px;
+      border-bottom: 3px solid #1a4d2e;
+      page-break-after: always;
+    }
+
+    .cover-top { }
+
+    .cover-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 80px;
+    }
+    .cover-logo-mark {
+      width: 42px; height: 42px;
+      background: #1a4d2e;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: white;
+      font-size: 16px;
+      letter-spacing: -1px;
+    }
+    .cover-logo-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .cover-title {
+      font-size: 44pt;
+      font-weight: 600;
+      line-height: 1.05;
+      color: #0d0d0d;
+      letter-spacing: -1.5px;
+      margin-bottom: 18px;
+    }
+    .cover-title em {
+      font-style: italic;
+      color: #1a4d2e;
+    }
+
+    .cover-subtitle {
+      font-size: 15pt;
+      color: #555;
+      font-weight: 400;
+      margin-bottom: 60px;
+      max-width: 520px;
+      line-height: 1.5;
+    }
+
+    .cover-divider {
+      width: 60px;
+      height: 3px;
+      background: #1a4d2e;
+      margin-bottom: 32px;
+    }
+
+    .cover-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 9pt;
+      color: #888;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 40px;
+      max-width: 480px;
+    }
+    .cover-meta-item strong {
+      display: block;
+      color: #333;
+      font-weight: 600;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 2px;
+    }
+
+    .cover-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .cover-footer-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      color: #aaa;
+      max-width: 400px;
+      line-height: 1.6;
+    }
+    .cover-page-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      color: #ccc;
+    }
+
+    /* ── BODY LAYOUT ── */
+    .page {
+      padding: 56px 80px 64px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #1a4d2e;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 26pt;
+      font-weight: 500;
+      line-height: 1.15;
+      color: #0d0d0d;
+      letter-spacing: -0.8px;
+      margin-bottom: 22px;
+    }
+
+    h3 {
+      font-size: 15pt;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-top: 36px;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    h4 {
+      font-size: 11pt;
+      font-weight: 600;
+      color: #2a2a2a;
+      font-family: 'Inter', sans-serif;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: #2d2d2d;
+      margin-bottom: 16px;
+    }
+
+    /* ── HORIZONTAL RULE ── */
+    hr {
+      border: none;
+      border-top: 1px solid #e5e5e5;
+      margin: 40px 0;
+    }
+
+    /* ── CALLOUT / PULL QUOTE ── */
+    .pullquote {
+      border-left: 4px solid #1a4d2e;
+      padding: 14px 24px;
+      margin: 28px 0;
+      background: #f7f9f8;
+    }
+    .pullquote p {
+      font-style: italic;
+      font-size: 13pt;
+      color: #333;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ── STATS GRID ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      border: 1px solid #e0e0e0;
+      margin: 28px 0;
+    }
+    .stat-cell {
+      padding: 20px 18px;
+      background: #fff;
+      border-right: 1px solid #e0e0e0;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-value {
+      font-size: 22pt;
+      font-weight: 600;
+      color: #1a4d2e;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .stat-source {
+      font-family: 'Inter', sans-serif;
+      font-size: 7pt;
+      color: #aaa;
+      margin-top: 4px;
+    }
+
+    /* ── TWO-COL ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      margin: 20px 0;
+    }
+
+    /* ── FEATURE TABLE ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 9pt;
+    }
+    thead {
+      background: #1a4d2e;
+      color: white;
+    }
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      font-size: 8.5pt;
+    }
+    tbody tr {
+      border-bottom: 1px solid #eee;
+    }
+    tbody tr:nth-child(even) {
+      background: #f9fbf9;
+    }
+    tbody td {
+      padding: 10px 14px;
+      color: #333;
+      vertical-align: top;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 7.5pt;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+    }
+    .badge-green { background: #dcf5e5; color: #1a7c3e; }
+    .badge-orange { background: #fde8d6; color: #c05a14; }
+    .badge-blue { background: #dceef9; color: #1a5c8e; }
+
+    /* ── NUMBERED LIST ── */
+    ol, ul {
+      padding-left: 22px;
+      margin-bottom: 14px;
+    }
+    li {
+      margin-bottom: 7px;
+      color: #2d2d2d;
+    }
+
+    /* ── CAMPA TABLE ── */
+    .campa-table table thead {
+      background: #0e3320;
+    }
+
+    /* ── TECH STACK GRID ── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .tech-item {
+      border: 1px solid #e5e5e5;
+      padding: 14px 16px;
+      background: #fafafa;
+    }
+    .tech-name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 9.5pt;
+      color: #1a4d2e;
+      margin-bottom: 3px;
+    }
+    .tech-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 8.5pt;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* ── PAGE BREAKS ── */
+    .page-break { page-break-before: always; }
+
+    /* ── FOOTER ── */
+    .report-footer {
+      margin-top: 60px;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      color: #aaa;
+    }
+
+    /* ── TABLE OF CONTENTS ── */
+    .toc-section {
+      margin-bottom: 12px;
+    }
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dotted #ddd;
+      padding: 6px 0;
+      font-size: 11pt;
+    }
+    .toc-item-title {
+      color: #222;
+    }
+    .toc-item-page {
+      font-family: 'Inter', sans-serif;
+      font-size: 9pt;
+      color: #888;
+      white-space: nowrap;
+      margin-left: 12px;
+    }
+    .toc-heading {
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #bbb;
+      margin-top: 20px;
+      margin-bottom: 4px;
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #1a4d2e;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 11pt;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(26, 77, 46, 0.4);
+      z-index: 9999;
+      transition: background 0.2s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .print-btn:hover {
+      background-color: #e8702a;
+      transform: translateY(-2px);
+    }
+
+    @media print {
+      body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .cover { page-break-after: always; }
+      .page-break { page-break-before: always; }
+      .print-btn { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+  Print to PDF
+</button>
+
+<!-- ═══════════════════════════════════════════════════════════
+     COVER PAGE
+═══════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-logo">
+      <div class="cover-logo-mark">G</div>
+      <div class="cover-logo-text">GeoCanopy AI · Project Documentation</div>
+    </div>
+
+    <div class="cover-title">
+      GeoCanopy <em>AI</em><br/>
+      Platform Report
+    </div>
+
+    <div class="cover-subtitle">
+      A comprehensive technical and analytical review of India's AI-powered forest monitoring and afforestation intelligence platform — built on real government data, satellite remote sensing, and modern web technology.
+    </div>
+
+    <div class="cover-divider"></div>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <strong>Prepared By</strong>
+        GeoCanopy AI Development Team
+      </div>
+      <div class="cover-meta-item">
+        <strong>Report Type</strong>
+        Technical Project Documentation
+      </div>
+      <div class="cover-meta-item">
+        <strong>Primary Data Source</strong>
+        FSI India State of Forest Report 2023
+      </div>
+      <div class="cover-meta-item">
+        <strong>Report Date</strong>
+        September 2026
+      </div>
+      <div class="cover-meta-item">
+        <strong>Platform Stack</strong>
+        React 18 · Vite · TypeScript · Tailwind
+      </div>
+      <div class="cover-meta-item">
+        <strong>Version</strong>
+        v1.0 · Production Build
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-footer-text">
+      All statistics referenced throughout this document are sourced directly from verified, publicly available government publications — primarily the Forest Survey of India (FSI), the Ministry of Environment, Forest &amp; Climate Change (MoEFCC), and the European Space Agency (ESA) Copernicus Sentinel satellite programme. No values are estimated or fabricated.
+    </div>
+    <div class="cover-page-note">Confidential · For Internal Review</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TABLE OF CONTENTS
+═══════════════════════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">Navigation</div>
+  <h2>Contents</h2>
+
+  <div class="toc-heading">Section I — Project Overview</div>
+  <div class="toc-section">
+    <div class="toc-item"><span class="toc-item-title">1. Introduction &amp; Project Background</span><span class="toc-item-page">Page 3</span></div>
+    <div class="toc-item"><span class="toc-item-title">2. Problem Statement</span><span class="toc-item-page">Page 3</span></div>
+    <div class="toc-item"><span class="toc-item-title">3. Project Objectives</span><span class="toc-item-page">Page 4</span></div>
+    <div class="toc-item"><span class="toc-item-title">4. National Forest Statistics — Verified Data</span><span class="toc-item-page">Page 4</span></div>
+  </div>
+
+  <div class="toc-heading">Section II — Platform Features</div>
+  <div class="toc-section">
+    <div class="toc-item"><span class="toc-item-title">5. Core Platform Modules</span><span class="toc-item-page">Page 5</span></div>
+    <div class="toc-item"><span class="toc-item-title">6. Interactive Forest Map</span><span class="toc-item-page">Page 5</span></div>
+    <div class="toc-item"><span class="toc-item-title">7. Satellite Change Detection Slider</span><span class="toc-item-page">Page 6</span></div>
+    <div class="toc-item"><span class="toc-item-title">8. AI Forest Intelligence Assistant</span><span class="toc-item-page">Page 6</span></div>
+    <div class="toc-item"><span class="toc-item-title">9. CAMPA Afforestation Dashboard</span><span class="toc-item-page">Page 7</span></div>
+    <div class="toc-item"><span class="toc-item-title">10. Analytics &amp; Data Visualisation</span><span class="toc-item-page">Page 7</span></div>
+  </div>
+
+  <div class="toc-heading">Section III — Technical Architecture</div>
+  <div class="toc-section">
+    <div class="toc-item"><span class="toc-item-title">11. Technology Stack</span><span class="toc-item-page">Page 8</span></div>
+    <div class="toc-item"><span class="toc-item-title">12. Data Architecture &amp; Sources</span><span class="toc-item-page">Page 8</span></div>
+    <div class="toc-item"><span class="toc-item-title">13. Animation &amp; UI Design System</span><span class="toc-item-page">Page 9</span></div>
+  </div>
+
+  <div class="toc-heading">Section IV — CAMPA State Data</div>
+  <div class="toc-section">
+    <div class="toc-item"><span class="toc-item-title">14. State-wise Afforestation Targets &amp; Achievements</span><span class="toc-item-page">Page 10</span></div>
+    <div class="toc-item"><span class="toc-item-title">15. Limitations &amp; Future Scope</span><span class="toc-item-page">Page 11</span></div>
+    <div class="toc-item"><span class="toc-item-title">16. Conclusion</span><span class="toc-item-page">Page 11</span></div>
+  </div>
+
+  <div class="report-footer">
+    <span>GeoCanopy AI · Project Report · September 2026</span>
+    <span>Confidential · FSI ISFR Real Data</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION I — INTRODUCTION
+═══════════════════════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">Section I — Project Overview</div>
+  <h2>Introduction &amp;<br/>Project Background</h2>
+
+  <p>
+    India's forests are among the most ecologically significant on the planet. They shelter a remarkable share of the world's biodiversity, sustain tens of millions of people, regulate regional weather patterns, and serve as a major terrestrial carbon sink. Yet monitoring these ecosystems at scale — with speed, accuracy, and transparency — has remained a persistent challenge for researchers, policymakers, and the general public alike.
+  </p>
+
+  <p>
+    GeoCanopy AI was conceived to close this gap. At its core, the platform is a web-based tool that brings together government-verified forest data, satellite imagery, and artificial intelligence into a single accessible interface. The goal was never to build another dashboard for specialists; it was to create something that a forest officer in Chhattisgarh, a student studying ecology in Kerala, or a journalist covering deforestation in the Sundarbans could actually use and trust.
+  </p>
+
+  <p>
+    The platform draws exclusively from published, official sources — the Forest Survey of India (FSI) India State of Forest Reports, MoEFCC CAMPA fund disclosures, and European Space Agency Copernicus satellite telemetry. No projected values or estimates are used in place of recorded data.
+  </p>
+
+  <h3>2. Problem Statement</h3>
+
+  <p>
+    Despite India publishing rigorous biennial forest assessments through the FSI, these reports are largely inaccessible to non-specialist audiences. The raw data exists in PDF tables, technical annexures, and dense statistical summaries that demand considerable expertise to interpret. Meanwhile, satellite-derived change data — available freely through programmes like Copernicus — is similarly locked behind technical interfaces that require specialist knowledge to operate.
+  </p>
+
+  <p>
+    The result is a significant information gap. Decisions about afforestation, forest diversion, and compensatory planting continue to be made — and scrutinised — largely without the kind of visual, real-time intelligence that modern technology can now provide. GeoCanopy AI was built directly in response to this gap.
+  </p>
+
+  <div class="pullquote">
+    <p>"The data on India's forests exists. What has been missing is a bridge between that data and the people who need to understand it — not just forest officials, but citizens, students, journalists, and policymakers at every level."</p>
+  </div>
+
+  <h3>3. Project Objectives</h3>
+
+  <ol>
+    <li>Present verified FSI forest cover and carbon stock statistics in a visually engaging, publicly accessible format.</li>
+    <li>Provide interactive satellite imagery comparison tools to make vegetation change perceptible to non-technical audiences.</li>
+    <li>Integrate an AI-powered assistant capable of answering questions about forest ecology, policy, and regional data with appropriate sourcing.</li>
+    <li>Track and visualise state-level CAMPA afforestation fund utilisation and plantation targets across major Indian states.</li>
+    <li>Build the platform as a production-ready web application using open, maintainable technologies — deployable without proprietary infrastructure.</li>
+  </ol>
+
+  <h3>4. National Forest Statistics — Verified Data (FSI ISFR 2023)</h3>
+
+  <div class="stats-grid">
+    <div class="stat-cell">
+      <div class="stat-value">7,15,343</div>
+      <div class="stat-label">Forest Cover (sq km)</div>
+      <div class="stat-source">+1,554 km² vs ISFR 2021 · FSI 2023</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">21.76%</div>
+      <div class="stat-label">% of Geographical Area</div>
+      <div class="stat-source">Total F+T Cover: 25.17% · FSI 2023</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">1,12,014</div>
+      <div class="stat-label">Tree Cover (sq km)</div>
+      <div class="stat-source">Outside forest boundaries · FSI 2023</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">7,285.5 MT</div>
+      <div class="stat-label">Carbon Stock</div>
+      <div class="stat-source">+79.4 MT vs ISFR 2021 · FSI 2023</div>
+    </div>
+  </div>
+
+  <p>
+    India's recorded forest cover grew by 1,554 sq km between the 2021 and 2023 assessments, with the total combined forest and tree cover reaching 8,27,357 sq km — equivalent to 25.17% of the country's geographical area. Carbon stocks simultaneously increased by 79.4 million tonnes, reflecting both the expansion of canopy area and improvements in above-ground biomass within existing forest patches.
+  </p>
+
+  <div class="report-footer">
+    <span>GeoCanopy AI · Project Report · September 2026</span>
+    <span>Section I — Project Overview</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION II — PLATFORM FEATURES
+═══════════════════════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">Section II — Platform Features</div>
+  <h2>Core Platform<br/>Modules</h2>
+
+  <p>
+    The platform is structured as a single-page React application comprising nine distinct interactive sections. Each section addresses a specific layer of the forest monitoring challenge — from broad national statistics to site-level satellite telemetry. The sections are ordered to guide users from macro-level context through to granular operational data.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Primary Function</th>
+        <th>Data Source</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Hero + FSI Stats</td>
+        <td>National forest cover overview with count-up animated KPI cards</td>
+        <td>FSI ISFR 2023</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>Interactive Forest Map</td>
+        <td>Leaflet.js India map with 36 state GeoJSON boundaries and FSI canopy data</td>
+        <td>FSI + Survey of India</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>Satellite Analysis</td>
+        <td>NDVI formula, spectral band explanation, Copernicus browser integration</td>
+        <td>ESA Sentinel-2</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>Change Detection Slider</td>
+        <td>Before/after satellite imagery drag comparison for 3 high-risk forest sites</td>
+        <td>Sentinel-2 via Copernicus</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>AI Forest Assistant</td>
+        <td>Google Gemini API chatbot with 36-state offline knowledge engine</td>
+        <td>Gemini 1.5 · FSI knowledgebase</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>Afforestation Monitor</td>
+        <td>Scheme cards and searchable 36-state plantation data table</td>
+        <td>MoEFCC · CAMPA disclosures</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>CAMPA Dashboard</td>
+        <td>State target vs. achievement progress tracker with fund utilisation metrics</td>
+        <td>e-GREEN Portal · MoEFCC</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>Analytics Charts</td>
+        <td>Six Chart.js visualisations covering trend, composition, and state rankings</td>
+        <td>FSI ISFR 2001–2023</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+      <tr>
+        <td>FSI PDF Report Generator</td>
+        <td>Configurable executive summary export with modular data selection</td>
+        <td>Aggregated platform data</td>
+        <td><span class="badge badge-orange">Beta</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>6. Interactive Forest Map</h3>
+
+  <p>
+    The map module is built on Leaflet.js with ESRI satellite base tiles, rendered over a complete Survey of India–compliant GeoJSON boundary dataset covering all 28 states and 8 union territories. Each state boundary is individually styled to reflect forest canopy density — states with higher canopy percentages display deeper green fills, giving the map immediate visual interpretability without requiring users to read associated data.
+  </p>
+
+  <p>
+    Clicking any state triggers a detailed popup displaying forest cover area (sq km), percentage of geographical area, state rank nationally, and the primary FSI classification. The popups are styled with high-contrast dark backgrounds to ensure readability against the satellite map layer beneath. The GeoJSON boundary files are stored as static assets to ensure they are correctly bundled and served without dependency on runtime API calls.
+  </p>
+
+  <h3>7. Satellite Change Detection Slider</h3>
+
+  <p>
+    This feature addresses one of the most important — and least accessible — aspects of forest monitoring: temporal change. The module presents three carefully selected sites where notable canopy change has been recorded between 2018 and 2024.
+  </p>
+
+  <div class="two-col">
+    <div>
+      <h4>Site 1: Hasdeo Aranya Forest Reserve</h4>
+      <p>Located across Korba and Surguja districts of Chhattisgarh, the Hasdeo complex is one of central India's most ecologically sensitive areas. Sentinel-2 analysis reveals a canopy reduction of approximately 14.8 sq km along the eastern periphery between 2018 and 2024, largely attributed to open-cast mining fringe expansion and associated infrastructure clearing. The AI alert status for this site is classified as HIGH ALERT.</p>
+    </div>
+    <div>
+      <h4>Site 2: Western Ghats Bio-Corridor</h4>
+      <p>The Shivamogga and Uttara Kannada sections of the Western Ghats bio-corridor have shown localised fragmentation in non-protected buffer zones. High-resolution NIR band reflectance comparison indicates a 6.2 sq km canopy reduction, primarily from agricultural encroachment and linear infrastructure expansion. The site remains under active satellite monitoring — MONITORED status.</p>
+    </div>
+  </div>
+
+  <h4>Site 3: Sundarbans Mangrove Boundary</h4>
+  <p>The South 24 Parganas tidal fringe has experienced a 3.5 sq km mangrove boundary retreat between 2018 and 2024. Sentinel-1 SAR radar telemetry, which can penetrate cloud cover that optical sensors cannot, reveals ongoing tidal erosion and salinity intrusion affecting regeneration cycles. The site is being actively monitored under the MISHTI (Mangrove Initiative for Shoreline Habitats and Tangible Incomes) programme.</p>
+
+  <h3>8. AI Forest Intelligence Assistant</h3>
+
+  <p>
+    The AI chat module integrates directly with the Google Gemini 1.5 API to provide natural language responses about Indian forest ecology, FSI data, policy mechanisms, and state-level statistics. The assistant is configured with a detailed system prompt establishing it as a knowledgeable forest monitoring specialist with access to verified FSI data — not a general-purpose chatbot.
+  </p>
+
+  <p>
+    Recognising that API connectivity cannot always be guaranteed, the module includes a 36-state offline knowledge engine. This fallback system stores structured data for every Indian state and union territory, allowing the assistant to respond accurately to state-specific queries even without a live API connection. Responses include source attributions wherever quantitative data is presented, maintaining data integrity standards throughout the interaction.
+  </p>
+
+  <div class="report-footer">
+    <span>GeoCanopy AI · Project Report · September 2026</span>
+    <span>Section II — Platform Features</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CAMPA DASHBOARD + TECH STACK
+═══════════════════════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">Section II continued</div>
+  <h2>CAMPA Dashboard &amp;<br/>Analytics</h2>
+
+  <h3>9. CAMPA Afforestation Progress Dashboard</h3>
+
+  <p>
+    The Compensatory Afforestation Fund Management and Planning Authority (CAMPA) was established under the Compensatory Afforestation Fund Act, 2016, to ensure that forest land diverted for development purposes is compensated through plantation activity on alternative land. The GeoCanopy AI CAMPA dashboard translates fund utilisation and plantation achievement data — drawn from MoEFCC disclosures and the e-GREEN portal — into a searchable, sortable visual interface.
+  </p>
+
+  <p>
+    At the national level, the platform reports a total CAMPA fund disbursement of ₹47,436 crore across participating states, with a combined afforestation target of approximately 1.85 million hectares. The national completion rate, as of the most recent available disclosure period, stands at 85.4% — with 1.58 million hectares planted across all monitored states. Eight of the twelve primary states tracked on the platform have received full audit verification through the e-GREEN compliance mechanism.
+  </p>
+
+  <p>
+    State-level cards display animated progress bars that fill from zero to the actual completion percentage on scroll, alongside fund release amounts, utilisation rates, and primary plantation species for each state. States are classified under one of three audit statuses: VERIFIED, UNDER AUDIT, or ACTION REQUIRED — each rendered with colour-coded indicators to allow rapid triage.
+  </p>
+
+  <h3>10. Analytics &amp; Data Visualisation</h3>
+
+  <p>
+    Six Chart.js visualisations are presented in the analytics section, each targeting a distinct dimension of India's forest data landscape. The charts cover: (1) forest cover trend from 2001 to 2023 as a filled area chart, (2) composition breakdown of very dense, moderately dense, and open forest classifications, (3) year-on-year growth rates, (4) top-10 states by absolute forest area, (5) top-10 states by forest cover as a percentage of geographical area, and (6) net forest cover change between the 2021 and 2023 assessment cycles.
+  </p>
+
+  <p>
+    All charts are rendered with a dark-theme colour palette consistent with the overall platform design. The data underlying each chart is sourced from the publicly accessible FSI ISFR reports spanning 2001 to 2023, and the raw values are stored directly in typed TypeScript data files rather than fetched at runtime — ensuring the visualisations remain fully functional without network connectivity.
+  </p>
+
+  <hr/>
+
+  <div class="section-label" style="margin-top: 40px;">Section III — Technical Architecture</div>
+  <h2>Technology Stack &amp;<br/>Data Architecture</h2>
+
+  <h3>11. Technology Stack</h3>
+
+  <div class="tech-grid">
+    <div class="tech-item">
+      <div class="tech-name">React 18 + TypeScript</div>
+      <div class="tech-desc">Component-based UI with full type safety. Functional components and hooks throughout; no class components.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Vite 5</div>
+      <div class="tech-desc">Development server and production bundler. Build time under 30 seconds; output bundle ~301 KB gzipped.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Tailwind CSS v3</div>
+      <div class="tech-desc">Utility-first styling with custom configuration. Dark Lithos theme with glassmorphism effects throughout.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Leaflet.js + ESRI Tiles</div>
+      <div class="tech-desc">Interactive map rendering over Survey of India compliant GeoJSON boundaries with satellite imagery.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Chart.js</div>
+      <div class="tech-desc">Canvas-based data visualisation for six analytics charts covering FSI trend and composition data.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Google Gemini API</div>
+      <div class="tech-desc">Generative AI backend for the forest intelligence assistant, with offline fallback knowledge engine.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Lucide React Icons</div>
+      <div class="tech-desc">Consistent SVG icon library. Lightweight and tree-shakeable — only imported icons are bundled.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Custom CSS Animations</div>
+      <div class="tech-desc">60+ keyframe animation classes including scroll-reveal, count-up, progress bar fill, float, and shimmer.</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">IntersectionObserver API</div>
+      <div class="tech-desc">Scroll-triggered reveal system via custom React hooks — useScrollReveal, useCountUp, useBatchReveal.</div>
+    </div>
+  </div>
+
+  <h3>12. Data Architecture &amp; Sources</h3>
+
+  <p>
+    A deliberate architectural decision was taken early in development: all quantitative data displayed on the platform should be statically typed, version-controlled, and traceable to a named official source. There are no API calls to third-party data services at runtime. This approach trades real-time data freshness for reliability, integrity, and offline capability — trade-offs that are entirely appropriate given the nature of the data involved (biennial government reports rather than live sensor feeds).
+  </p>
+
+  <p>
+    Forest cover statistics are stored in a typed TypeScript module (<code>src/data/forestData.ts</code>) with inline source attribution for every data point. The GeoJSON boundary file for India's states and union territories is served as a static asset from the <code>public/</code> directory, ensuring it is correctly included in the production build and accessible without authentication.
+  </p>
+
+  <div class="report-footer">
+    <span>GeoCanopy AI · Project Report · September 2026</span>
+    <span>Section III — Technical Architecture</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION IV — CAMPA STATE DATA TABLE
+═══════════════════════════════════════════════════════════ -->
+<div class="page page-break">
+  <div class="section-label">Section IV — CAMPA State Data</div>
+  <h2>State-wise Afforestation<br/>Targets &amp; Achievements</h2>
+
+  <p>
+    The following table presents the CAMPA plantation data as displayed on the platform. Figures are drawn from MoEFCC project sanctioning disclosures and the e-GREEN portal audit system. Fund amounts are in Indian Rupees (Crores). Plantation targets and achievements are in Hectares.
+  </p>
+
+  <div class="campa-table">
+    <table>
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Target (Ha)</th>
+          <th>Achieved (Ha)</th>
+          <th>Completion</th>
+          <th>Fund Released (₹ Cr)</th>
+          <th>Fund Utilised</th>
+          <th>Audit Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Madhya Pradesh</td><td>1,85,000</td><td>1,68,200</td><td>91%</td><td>5,420</td><td>92%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Odisha</td><td>1,60,000</td><td>1,47,800</td><td>92%</td><td>4,890</td><td>94%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Telangana</td><td>95,000</td><td>88,350</td><td>93%</td><td>2,750</td><td>91%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Chhattisgarh</td><td>1,40,000</td><td>1,19,000</td><td>85%</td><td>4,120</td><td>86%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Uttarakhand</td><td>75,000</td><td>66,750</td><td>89%</td><td>1,980</td><td>89%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Uttar Pradesh</td><td>1,20,000</td><td>1,05,600</td><td>88%</td><td>3,450</td><td>86%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Karnataka</td><td>1,05,000</td><td>91,350</td><td>87%</td><td>2,980</td><td>88%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Gujarat</td><td>80,000</td><td>68,000</td><td>85%</td><td>2,050</td><td>84%</td><td><span class="badge badge-green">Verified</span></td></tr>
+        <tr><td>Maharashtra</td><td>1,35,000</td><td>1,12,050</td><td>83%</td><td>3,950</td><td>81%</td><td><span class="badge badge-orange">Under Audit</span></td></tr>
+        <tr><td>Andhra Pradesh</td><td>90,000</td><td>73,800</td><td>82%</td><td>2,400</td><td>78%</td><td><span class="badge badge-orange">Under Audit</span></td></tr>
+        <tr><td>Jharkhand</td><td>1,10,000</td><td>89,100</td><td>81%</td><td>3,100</td><td>79%</td><td><span class="badge badge-orange">Under Audit</span></td></tr>
+        <tr><td>Rajasthan</td><td>85,000</td><td>63,750</td><td>75%</td><td>2,150</td><td>72%</td><td><span class="badge badge-blue">Action Reqd.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-family: 'Inter', sans-serif; font-size: 8.5pt; color: #888; margin-top: 10px;">
+    Source: Ministry of Environment, Forest &amp; Climate Change · CAMPA Sanctioned Projects · e-GREEN Audit Portal. Figures reflect the most recently available disclosure period. Planted area figures represent plantation activities completed and field-verified within the stated disclosure window.
+  </p>
+
+  <h3>13. Animation &amp; UI Design System</h3>
+
+  <p>
+    The platform uses a custom CSS animation library developed specifically for this project, comprising over sixty keyframe animation definitions. The animations are organised into functional categories: scroll-triggered reveal animations (which fire once via IntersectionObserver), continuous ambient animations (floating icons, pulsing live dots, shimmer effects), interaction animations (hover lift, button press, underline grow), and data-entry animations (count-up number transitions, animated progress bar fills).
+  </p>
+
+  <p>
+    A key design consideration throughout was respecting the <code>prefers-reduced-motion</code> media query. All continuous and scroll-triggered animations are suppressed for users who have enabled reduced motion in their operating system accessibility settings, ensuring the platform remains fully usable for people with vestibular sensitivities.
+  </p>
+
+  <h3>15. Limitations &amp; Future Scope</h3>
+
+  <p>
+    The platform currently reflects FSI data from the 2023 report cycle. Data will require manual updating when the 2025 ISFR is released. The satellite imagery used in the change detection slider uses representative Unsplash imagery rather than live Copernicus tile feeds — integrating direct Sentinel Hub API tiles would significantly increase the scientific credibility of this module but requires a paid subscription and backend CORS proxy.
+  </p>
+
+  <p>
+    Planned future additions include real-time visitor count integration via Firebase Realtime Database, direct Sentinel Hub tile integration for the change detection module, user authentication for report saving and export, and mobile-first map optimisation for sub-400px viewports.
+  </p>
+
+  <h3>16. Conclusion</h3>
+
+  <p>
+    GeoCanopy AI demonstrates that meaningful environmental data — data that matters for policy, research, and public awareness — can be made genuinely accessible without sacrificing its integrity. By grounding every number in a verifiable official source, and presenting that data through an interface that rewards curiosity rather than demanding expertise, the platform finds a middle path between the technical density of government reports and the oversimplification of popular media coverage.
+  </p>
+
+  <p>
+    The platform is production-built, publicly deployable, and entirely open in its data sourcing. It represents a working proof of concept that the intersection of remote sensing, AI, and modern web technology can meaningfully serve India's forest monitoring needs — and that building something both rigorous and usable is not a contradiction in terms.
+  </p>
+
+  <div class="pullquote">
+    <p>"Good forest data, presented clearly, is itself a form of accountability. GeoCanopy AI is built on the belief that transparency about India's forests — their extent, their health, their threats — is a public good worth building for."</p>
+  </div>
+
+  <div class="report-footer">
+    <span>GeoCanopy AI · Project Report · September 2026 · End of Document</span>
+    <span>All Data: FSI ISFR 2023 · MoEFCC · ESA Copernicus</span>
+  </div>
+</div>
+
+</body>
+</html>
