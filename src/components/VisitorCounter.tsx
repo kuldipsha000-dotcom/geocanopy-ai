@@ -48,7 +48,7 @@ export const VisitorCounter: React.FC = () => {
   }, [totalVisits, displayTotal]);
 
   return (
-    <div className="flex flex-col items-center gap-2 max-w-[95vw]">
+    <div className="relative flex flex-col items-center">
       {/* ── Main Pill Badge ─────────────────────────────────── */}
       <button
         onClick={() => setShowDetail((v) => !v)}
@@ -108,7 +108,7 @@ export const VisitorCounter: React.FC = () => {
 
       {/* ── Expanded Detail Panel (on click) ─────────────────── */}
       {showDetail && (
-        <div className="animate-fadeIn bg-black/90 border border-white/15 backdrop-blur-xl rounded-2xl px-4 sm:px-5 py-4 w-[90vw] sm:w-72 max-w-[320px] text-[11px] sm:text-xs font-mono shadow-2xl">
+        <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 animate-fadeIn bg-black/90 border border-white/15 backdrop-blur-xl rounded-2xl px-4 sm:px-5 py-4 w-[92vw] sm:w-72 max-w-[320px] text-[11px] sm:text-xs font-mono shadow-2xl z-[60]">
           <div className="text-white/50 uppercase tracking-widest text-[10px] mb-3 text-center sm:text-left">
             Platform Transparency
           </div>
