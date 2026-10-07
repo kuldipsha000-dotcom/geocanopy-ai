@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Users, Globe, Wifi, WifiOff } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { Users, Globe, Wifi, WifiOff, X } from 'lucide-react';
 import { useVisitorCount } from '../hooks/useVisitorCount';
 
 /**
@@ -107,49 +108,65 @@ export const VisitorCounter: React.FC = () => {
       </button>
 
       {/* ── Expanded Detail Panel (on click) ─────────────────── */}
-      {showDetail && (
-        <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 animate-fadeIn bg-black/90 border border-white/15 backdrop-blur-xl rounded-2xl px-4 sm:px-5 py-4 w-[92vw] sm:w-72 max-w-[320px] text-[11px] sm:text-xs font-mono shadow-2xl z-[60]">
-          <div className="text-white/50 uppercase tracking-widest text-[10px] mb-3 text-center sm:text-left">
-            Platform Transparency
-          </div>
+      {showDetail && typeof document !== 'undefined' && createPortal(
+        <div 
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-0"
+          onClick={() => setShowDetail(false)}
+        >
+          <div 
+            className="animate-fadeIn bg-black/90 border border-white/15 backdrop-blur-xl rounded-2xl px-5 py-5 w-full max-w-[340px] text-[11px] sm:text-xs font-mono shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setShowDetail(false)}
+              className="absolute top-4 right-4 text-white/40 hover:text-white bg-white/5 hover:bg-white/10 rounded-full p-1 transition-colors"
+            >
+              <X size={14} />
+            </button>
 
-          <div className="space-y-2.5">
-            <div className="flex justify-between items-center">
-              <span className="text-white/60">Active sessions</span>
-              <span className="text-emerald-400 font-bold">
-                {displayActive.toLocaleString('en-IN')}
-              </span>
+            <div className="text-white/50 uppercase tracking-widest text-[10px] mb-4 text-center sm:text-left pr-6">
+              Platform Transparency
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-white/60">All-time visits</span>
-              <span className="text-[#e8702a] font-bold">
-                {displayTotal.toLocaleString('en-IN')}
-              </span>
-            </div>
-            <div className="flex justify-between items-center border-t border-white/10 pt-2.5">
-              <span className="text-white/60">Data source</span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] ${
-                isLive
-                  ? 'bg-emerald-500/15 text-emerald-400'
-                  : 'bg-amber-500/15 text-amber-400'
-              }`}>
-                {isLive ? '🔥 Firebase Live' : '📊 Seeded Estimate'}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-white/60">Tracking method</span>
-              <span className="text-white/80">
-                {isLive ? 'Presence (onDisconnect)' : 'Animated estimate'}
-              </span>
-            </div>
-          </div>
 
-          <div className="mt-3 pt-2.5 border-t border-white/10 text-[10px] text-white/35 leading-relaxed">
-            {isLive
-              ? 'Active count tracks users currently connected. Cleared automatically when tabs close. No cookies or personal data stored.'
-              : 'Firebase not yet configured. Numbers are seeded estimates. Connect Firebase for live tracking.'}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-white/60">Active sessions</span>
+                <span className="text-emerald-400 font-bold">
+                  {displayActive.toLocaleString('en-IN')}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-white/60">All-time visits</span>
+                <span className="text-[#e8702a] font-bold">
+                  {displayTotal.toLocaleString('en-IN')}
+                </span>
+              </div>
+              <div className="flex justify-between items-center border-t border-white/10 pt-3">
+                <span className="text-white/60">Data source</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] ${
+                  isLive
+                    ? 'bg-emerald-500/15 text-emerald-400'
+                    : 'bg-amber-500/15 text-amber-400'
+                }`}>
+                  {isLive ? '🔥 Firebase Live' : '📊 Seeded Estimate'}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5 sm:flex-row sm:justify-between sm:items-center">
+                <span className="text-white/60">Tracking method</span>
+                <span className="text-white/80 text-right">
+                  {isLive ? 'Presence (onDisconnect)' : 'Animated estimate'}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-white/35 leading-relaxed text-center sm:text-left">
+              {isLive
+                ? 'Active count tracks users currently connected. Cleared automatically when tabs close. No cookies or personal data stored.'
+                : 'Firebase not yet configured. Numbers are seeded estimates. Connect Firebase for live tracking.'}
+            </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
