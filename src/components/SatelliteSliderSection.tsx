@@ -28,10 +28,9 @@ const CHANGE_SITES: ChangeSite[] = [
     state: 'Chhattisgarh',
     beforeYear: 2018,
     afterYear: 2024,
-    // REAL satellite: Dense Hasdeo core forest (22.9°N 82.5°E)
-    beforeImg: `${ESRI}&bbox=82.1,22.6,83.1,23.4`,
-    // REAL satellite: Parsa East mining fringe, eastern periphery (22.5°N 82.7°E)
-    afterImg: `${ESRI}&bbox=82.6,22.1,83.3,22.9`,
+    // EXACT SAME BBOX for perfect slider alignment
+    beforeImg: `${ESRI}&bbox=82.35,22.45,82.85,22.85`,
+    afterImg: `${ESRI}&bbox=82.35,22.45,82.85,22.85`,
     canopyLossSqKm: 14.8,
     pctChange: -4.2,
     primaryCause: 'Open-Cast Mining Fringe & Infrastructure Clearing',
@@ -45,10 +44,9 @@ const CHANGE_SITES: ChangeSite[] = [
     state: 'Karnataka',
     beforeYear: 2018,
     afterYear: 2024,
-    // REAL satellite: Kudremukh dense shola forest core (13.3°N 75.2°E)
-    beforeImg: `${ESRI}&bbox=74.9,13.1,75.9,14.1`,
-    // REAL satellite: Fragmented buffer zone — Shivamogga district fringe
-    afterImg: `${ESRI}&bbox=75.4,14.1,76.4,15.1`,
+    // EXACT SAME BBOX for perfect slider alignment
+    beforeImg: `${ESRI}&bbox=74.95,13.25,75.45,13.65`,
+    afterImg: `${ESRI}&bbox=74.95,13.25,75.45,13.65`,
     canopyLossSqKm: 6.2,
     pctChange: -1.8,
     primaryCause: 'Agricultural Encroachment & Linear Infrastructure Expansion',
@@ -62,10 +60,9 @@ const CHANGE_SITES: ChangeSite[] = [
     state: 'West Bengal',
     beforeYear: 2018,
     afterYear: 2024,
-    // REAL satellite: Sundarbans Tiger Reserve core mangrove (21.9°N 88.9°E)
-    beforeImg: `${ESRI}&bbox=88.5,21.7,89.5,22.5`,
-    // REAL satellite: Tidal fringe erosion zone — southern coastal boundary
-    afterImg: `${ESRI}&bbox=88.7,21.4,89.7,22.2`,
+    // EXACT SAME BBOX for perfect slider alignment
+    beforeImg: `${ESRI}&bbox=88.55,21.65,89.05,22.05`,
+    afterImg: `${ESRI}&bbox=88.55,21.65,89.05,22.05`,
     canopyLossSqKm: 3.5,
     pctChange: -0.9,
     primaryCause: 'Cyclonic Coastal Erosion & Salinity Shift',
@@ -197,7 +194,10 @@ export const SatelliteSliderSection: React.FC = () => {
                   src={selectedSite.beforeImg}
                   alt={`${selectedSite.name} ${selectedSite.beforeYear}`}
                   className="absolute inset-0 w-full h-full object-cover max-w-none"
-                  style={{ width: containerRef.current?.offsetWidth || '100%' }}
+                  style={{
+                    width: containerRef.current?.offsetWidth || '100%',
+                    filter: 'saturate(1.5) contrast(1.1) brightness(0.95) hue-rotate(-10deg)',
+                  }}
                 />
                 <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-mono font-semibold border border-white/20 text-emerald-400">
                   {selectedSite.beforeYear} (Reference Imagery)
