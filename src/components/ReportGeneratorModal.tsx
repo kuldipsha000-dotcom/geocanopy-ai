@@ -8,11 +8,6 @@ interface ReportGeneratorModalProps {
 }
 
 export const ReportGeneratorModal: React.FC<ReportGeneratorModalProps> = ({ isOpen, onClose }) => {
-  const [reportType, setReportType] = useState<'national' | 'campa' | 'satellite'>('national');
-  const [includeAIInsights, setIncludeAIInsights] = useState<boolean>(true);
-  const [includeCampa, setIncludeCampa] = useState<boolean>(true);
-  const [includeStateRankings, setIncludeStateRankings] = useState<boolean>(true);
-  const [recipientName, setRecipientName] = useState<string>('Forest Policy & Regulatory Division');
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   if (!isOpen) return null;
@@ -49,126 +44,35 @@ export const ReportGeneratorModal: React.FC<ReportGeneratorModalProps> = ({ isOp
           </button>
         </div>
 
-        {/* Form Body */}
-        <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
-          {/* Report Scope Selection */}
+        {/* Form Body - Simplified Checkbox List */}
+        <div className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-white/60 mb-2">
-              Select Executive Report Scope
+            <label className="block text-xs font-mono uppercase tracking-wider text-white/60 mb-4">
+              Select Topics to Include in Report
             </label>
-            <div className="grid grid-cols-3 gap-3">
-              <button
-                type="button"
-                onClick={() => setReportType('national')}
-                className={`p-3.5 rounded-2xl border text-left transition-all ${
-                  reportType === 'national'
-                    ? 'bg-[#e8702a]/20 border-[#e8702a] text-white'
-                    : 'bg-white/5 border-white/10 text-white/70 hover:border-white/30'
-                }`}
-              >
-                <div className="font-bold text-xs mb-1">National ISFR 2021/2023</div>
-                <div className="text-[10px] text-white/50">Comprehensive Canopy & Carbon Stock</div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setReportType('campa')}
-                className={`p-3.5 rounded-2xl border text-left transition-all ${
-                  reportType === 'campa'
-                    ? 'bg-[#e8702a]/20 border-[#e8702a] text-white'
-                    : 'bg-white/5 border-white/10 text-white/70 hover:border-white/30'
-                }`}
-              >
-                <div className="font-bold text-xs mb-1">CAMPA Audit Report</div>
-                <div className="text-[10px] text-white/50">Afforestation Fund & Plantation Metrics</div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setReportType('satellite')}
-                className={`p-3.5 rounded-2xl border text-left transition-all ${
-                  reportType === 'satellite'
-                    ? 'bg-[#e8702a]/20 border-[#e8702a] text-white'
-                    : 'bg-white/5 border-white/10 text-white/70 hover:border-white/30'
-                }`}
-              >
-                <div className="font-bold text-xs mb-1">Sentinel AI Alerts</div>
-                <div className="text-[10px] text-white/50">Remote Sensing Deforestation Shifts</div>
-              </button>
-            </div>
-          </div>
-
-          {/* Prepared For / Recipient */}
-          <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-white/60 mb-2">
-              Prepared For (Agency / Recipient Title)
-            </label>
-            <input
-              type="text"
-              value={recipientName}
-              onChange={(e) => setRecipientName(e.target.value)}
-              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#e8702a] transition-colors"
-              placeholder="e.g., MoEFCC / State Forest Department / Research Directorate"
-            />
-          </div>
-
-          {/* Modular Content Checkboxes */}
-          <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-white/60 mb-2">
-              Include Custom Modules in PDF
-            </label>
-            <div className="space-y-2.5">
-              <label className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={includeAIInsights}
-                  onChange={(e) => setIncludeAIInsights(e.target.checked)}
-                  className="w-4 h-4 accent-[#e8702a] rounded"
-                />
-                <div>
-                  <div className="text-xs font-semibold">Gemini AI Ecological Insights</div>
-                  <div className="text-[10px] text-white/50">Automated executive summary and regional anomaly breakdown</div>
-                </div>
-              </label>
-
-              <label className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={includeCampa}
-                  onChange={(e) => setIncludeCampa(e.target.checked)}
-                  className="w-4 h-4 accent-[#e8702a] rounded"
-                />
-                <div>
-                  <div className="text-xs font-semibold">CAMPA State Target vs. Achievement Metrics</div>
-                  <div className="text-[10px] text-white/50">Fund utilization rate & hectares planted per state</div>
-                </div>
-              </label>
-
-              <label className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={includeStateRankings}
-                  onChange={(e) => setIncludeStateRankings(e.target.checked)}
-                  className="w-4 h-4 accent-[#e8702a] rounded"
-                />
-                <div>
-                  <div className="text-xs font-semibold">State & UT Forest Canopy Leaderboard</div>
-                  <div className="text-[10px] text-white/50">28 States & 8 UTs ranked by canopy percentage</div>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          {/* Quick Telemetry Preview Box */}
-          <div className="bg-black/60 border border-white/15 p-4 rounded-2xl text-xs space-y-2 font-mono">
-            <div className="text-emerald-400 font-bold flex items-center gap-1.5">
-              <ShieldCheck size={14} /> Verified FSI Key Statistics Summary:
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-[11px] text-white/70">
-              <div>• Forest Cover: <strong className="text-white">{NATIONAL_STATS_2023.forestCover.areaSqKm.toLocaleString()} sq km</strong></div>
-              <div>• Tree Cover: <strong className="text-white">{NATIONAL_STATS_2023.treeCover.areaSqKm.toLocaleString()} sq km</strong></div>
-              <div>• Total Canopy %: <strong className="text-white">{NATIONAL_STATS_2023.totalForestAndTreeCover.percentageOfGeoArea}%</strong></div>
-              <div>• Carbon Stock: <strong className="text-white">{NATIONAL_STATS_2023.carbonStock.totalMillionTonnes.toLocaleString()} MT</strong></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { id: 'forestMap', label: 'Forest Map', desc: 'Interactive map and territorial data' },
+                { id: 'satellite', label: 'Satellite', desc: 'High-res satellite telemetry' },
+                { id: 'changeSlider', label: 'Change Slider', desc: 'Before vs. after canopy shifts' },
+                { id: 'geminiAI', label: 'Gemini AI Insights', desc: 'AI-generated ecological analysis' },
+                { id: 'afforestation', label: 'Afforestation', desc: 'Tree planting and land restoration' },
+                { id: 'campa', label: 'CAMPA Progress', desc: 'Fund utilization metrics' },
+                { id: 'analytics', label: 'Analytics', desc: 'National forest statistics' },
+                { id: 'dataSources', label: 'Data Sources', desc: 'Citations and external API data' }
+              ].map((topic) => (
+                <label key={topic.id} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    className="w-4 h-4 accent-[#e8702a] rounded cursor-pointer"
+                  />
+                  <div>
+                    <div className="text-sm font-semibold">{topic.label}</div>
+                    <div className="text-[10px] text-white/50">{topic.desc}</div>
+                  </div>
+                </label>
+              ))}
             </div>
           </div>
         </div>
