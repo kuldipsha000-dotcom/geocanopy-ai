@@ -175,19 +175,22 @@ export const SatelliteSliderSection: React.FC = () => {
               }}
               className="relative h-[420px] sm:h-[480px] w-full cursor-ew-resize overflow-hidden"
             >
-              {/* After Image (Background) */}
+              {/* After Image (Background - Simulating Deforested/Degraded 2024) */}
               <img
                 src={selectedSite.afterImg}
                 alt={`${selectedSite.name} ${selectedSite.afterYear}`}
                 className="absolute inset-0 w-full h-full object-cover"
+                style={{
+                  filter: 'saturate(0.5) sepia(0.35) contrast(1.15) hue-rotate(-15deg)',
+                }}
               />
-              <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-mono font-semibold border border-white/20 text-[#e8702a]">
-                {selectedSite.afterYear} (Current Satellite Telemetry)
+              <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-mono font-semibold border border-white/20 text-[#e8702a] z-10">
+                {selectedSite.afterYear} (Degraded Canopy)
               </div>
 
-              {/* Before Image (Clipped Overlay) */}
+              {/* Before Image (Clipped Overlay - Simulating Lush 2018) */}
               <div
-                className="absolute inset-0 overflow-hidden"
+                className="absolute inset-0 overflow-hidden z-20"
                 style={{ width: `${sliderPos}%` }}
               >
                 <img
@@ -196,7 +199,7 @@ export const SatelliteSliderSection: React.FC = () => {
                   className="absolute inset-0 w-full h-full object-cover max-w-none"
                   style={{
                     width: containerRef.current?.offsetWidth || '100%',
-                    filter: 'saturate(1.5) contrast(1.1) brightness(0.95) hue-rotate(-10deg)',
+                    filter: 'saturate(2) contrast(1.1) brightness(0.9) hue-rotate(15deg)',
                   }}
                 />
                 <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-mono font-semibold border border-white/20 text-emerald-400">
