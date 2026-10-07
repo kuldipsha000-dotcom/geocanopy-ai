@@ -48,15 +48,15 @@ export const VisitorCounter: React.FC = () => {
   }, [totalVisits, displayTotal]);
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2 max-w-[95vw]">
       {/* ── Main Pill Badge ─────────────────────────────────── */}
       <button
         onClick={() => setShowDetail((v) => !v)}
-        className="group flex items-center gap-3 px-5 py-2.5 rounded-full bg-black/70 border border-white/15 backdrop-blur-md
+        className="group flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 rounded-[2rem] sm:rounded-full bg-black/70 border border-white/15 backdrop-blur-md
                    hover:border-white/30 hover:bg-black/80 transition-all duration-300 cursor-pointer select-none"
       >
         {/* Live dot */}
-        <span className="relative flex items-center justify-center w-2.5 h-2.5">
+        <span className="relative flex items-center justify-center w-2.5 h-2.5 shrink-0">
           <span
             className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping ${
               isLive ? 'bg-emerald-400' : status === 'fallback' ? 'bg-amber-400' : 'bg-white/40'
@@ -70,30 +70,32 @@ export const VisitorCounter: React.FC = () => {
         </span>
 
         {/* Active count */}
-        <span className="flex items-center gap-1.5 text-xs font-mono">
+        <span className="flex items-center gap-1.5 text-xs font-mono shrink-0">
           <Users size={12} className="text-white/60" />
           <span className="text-white font-bold tabular-nums">
             {isLoading ? '—' : displayActive.toLocaleString('en-IN')}
           </span>
-          <span className="text-white/55">
+          <span className="text-white/55 hidden sm:inline">
             {displayActive === 1 ? 'visitor' : 'visitors'} online now
           </span>
+          <span className="text-white/55 sm:hidden">online</span>
         </span>
 
         {/* Divider */}
-        <span className="w-px h-3 bg-white/20" />
+        <span className="w-px h-3 bg-white/20 shrink-0" />
 
         {/* Total visits */}
-        <span className="flex items-center gap-1.5 text-xs font-mono">
+        <span className="flex items-center gap-1.5 text-xs font-mono shrink-0">
           <Globe size={12} className="text-white/60" />
           <span className="text-[#e8702a] font-bold tabular-nums">
             {isLoading ? '—' : `${displayTotal.toLocaleString('en-IN')}+`}
           </span>
-          <span className="text-white/55">total visits</span>
+          <span className="text-white/55 hidden sm:inline">total visits</span>
+          <span className="text-white/55 sm:hidden">total</span>
         </span>
 
         {/* Connection indicator */}
-        <span className="ml-0.5">
+        <span className="ml-0.5 shrink-0">
           {isLive ? (
             <Wifi size={11} className="text-emerald-400/70" />
           ) : status === 'fallback' ? (
@@ -106,8 +108,8 @@ export const VisitorCounter: React.FC = () => {
 
       {/* ── Expanded Detail Panel (on click) ─────────────────── */}
       {showDetail && (
-        <div className="animate-fadeIn bg-black/90 border border-white/15 backdrop-blur-xl rounded-2xl px-5 py-4 w-72 text-xs font-mono shadow-2xl">
-          <div className="text-white/50 uppercase tracking-widest text-[10px] mb-3">
+        <div className="animate-fadeIn bg-black/90 border border-white/15 backdrop-blur-xl rounded-2xl px-4 sm:px-5 py-4 w-[90vw] sm:w-72 max-w-[320px] text-[11px] sm:text-xs font-mono shadow-2xl">
+          <div className="text-white/50 uppercase tracking-widest text-[10px] mb-3 text-center sm:text-left">
             Platform Transparency
           </div>
 

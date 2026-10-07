@@ -142,7 +142,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Bottom-Right Block */}
         <div
-          className="absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[260px] flex flex-col items-start gap-4 sm:gap-5 z-50 hero-anim hero-fade pointer-events-auto"
+          className="absolute bottom-20 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[260px] flex flex-col items-start gap-4 sm:gap-5 z-40 hero-anim hero-fade pointer-events-auto"
           style={{ animationDelay: '0.85s' }}
         >
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
@@ -166,7 +166,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Live Visitor Counter — bottom centre */}
         <div
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 hero-anim hero-fade"
+          className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 hero-anim hero-fade"
           style={{ animationDelay: '1.0s' }}
         >
           <VisitorCounter />
